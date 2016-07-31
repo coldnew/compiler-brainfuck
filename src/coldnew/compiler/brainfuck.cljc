@@ -28,7 +28,7 @@
    ["-O" "--optimize-level LEVEL" "Optimize level"
     :default 0
     :parse-fn #(str->int %)
-    :validate [#(< 0 % 2) "Must be a number in 0 and 1 (inclusive)."]]
+    :validate [#(< 0 % 3) "Must be a number in 0 ~ 2 (inclusive)."]]
    ;; A boolean option defaulting to nil
    ["-h" "--help"]])
 
@@ -42,6 +42,7 @@
         "Optimize level:"
         "  0     No optimize. (default)"
         "  1     Remove consecutive terms."
+        "  2     Remove common idiom."
         ""
         "Target language:"
         "  c"
