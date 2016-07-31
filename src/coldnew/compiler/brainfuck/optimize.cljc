@@ -24,26 +24,15 @@
 (defn reduce-empty-loops
   "Loops that contains empty children are safely removed."
   [ir]
-  (filter
-   (fn [s]
-     (case (:op s)
-       :loop (if (empty? (:children  s))
-               false
-               true)
-       true))
-   ir))
+  (filter (fn [s]
+            (case (:op s)
+              :loop (if (empty? (:children  s))
+                      false
+                      true)
+              true))
+          ir))
 
 ;;;; Reduce consecutive terms
-
-(defn reduce-empty-loops [ir]
-  (filter
-   (fn [s]
-     (case (:op s)
-       :loop (if (empty? (:children  s))
-               false
-               true)
-       true))
-   ir))
 
 (defn partition-by-type [ir]
   (partition-by
