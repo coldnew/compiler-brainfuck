@@ -1,6 +1,5 @@
 (ns coldnew.compiler.brainfuck.ir
-  (:require #?(:clj  [clojure.pprint :refer [cl-format]]
-               :cljs [cljs.pprint :refer [cl-format]])
+  (:require [clojure.pprint :refer [cl-format]]
             [clojure.string :as str]))
 
 (declare to-ir)

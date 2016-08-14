@@ -1,6 +1,5 @@
 (ns coldnew.compiler.brainfuck.optimize
-  (:require #?(:clj  [clojure.pprint :refer [cl-format]]
-               :cljs [cljs.pprint :refer [cl-format]])))
+  (:require [clojure.pprint :refer [cl-format]]))
 
 (declare reduce-consecutive-terms reduce-empty-loops reduce-common-idiom)
 
