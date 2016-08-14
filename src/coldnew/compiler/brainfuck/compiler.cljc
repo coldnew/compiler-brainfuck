@@ -10,46 +10,39 @@
             [coldnew.compiler.brainfuck.backend.rust     :refer [ir->rust]]
             ))
 
+(defn to-ir
+  "Build the input OPTIONS to ir format, which work as clojure's data structure.
+  The OPTIONS must be a hash-map and contains following keys/values:
+  {:input-file     \"xxx.bf\"
+   :output-file    \"xxx.c\"
+   :target          :c
+   :optimize-level  2}"
+  [options]
+  (-> (:source-code options)
+      parse
+      ast->ir
+      (optimize (:optimize-level options))))
+
 (declare compile-to)
 
 (defmulti compile-to :target)
 
 (defmethod compile-to :c
   [options]
-  (-> (:source-code options)
-      parse
-      ast->ir
-      (optimize (:optimize-level options))
-      ir->c))
+  (->> options to-ir ir->c))
 
 (defmethod compile-to :python
   [options]
-  (-> (:source-code options)
-      parse
-      ast->ir
-      (optimize (:optimize-level options))
-      ir->python))
+  (->> options to-ir ir->python))
 
 (defmethod compile-to :java
   [options]
-  (-> (:source-code options)
-      parse
-      ast->ir
-      (optimize (:optimize-level options))
-      ir->java))
+  (->> options to-ir ir->java))
 
 (defmethod compile-to :nodejs
   [options]
-  (-> (:source-code options)
-      parse
-      ast->ir
-      (optimize (:optimize-level options))
-      ir->nodejs))
+  (->> options to-ir ir->nodejs))
 
 (defmethod compile-to :rust
   [options]
-  (-> (:source-code options)
-      parse
-      ast->ir
-      (optimize (:optimize-level options))
-      ir->rust))
+  (->> options to-ir ir->rust))
