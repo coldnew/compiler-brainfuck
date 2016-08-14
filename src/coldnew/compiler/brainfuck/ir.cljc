@@ -43,4 +43,4 @@
         :form (str/replace (cl-format nil "[~d]" (apply str cmd)) #"[\\\s]" "")
         :children (map #(to-ir % (inc indent-depth)) cmd)
         :comment "Loop until data pointer is 0"}
-       (throw (ex-info "Unknown cmd to generate IR."))))))
+       (throw (ex-info "Unknown cmd to generate IR." {:op cmd}))))))
