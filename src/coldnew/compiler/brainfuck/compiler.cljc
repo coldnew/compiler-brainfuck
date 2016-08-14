@@ -19,7 +19,7 @@
   (-> (:source-code options)
       parse
       ast->ir
-      (optimize (:optimize options))
+      (optimize (:optimize-level options))
       ir->c))
 
 (defmethod compile-to :python
@@ -27,7 +27,7 @@
   (-> (:source-code options)
       parse
       ast->ir
-      (optimize (:optimize options))
+      (optimize (:optimize-level options))
       ir->python))
 
 (defmethod compile-to :java
@@ -35,7 +35,7 @@
   (-> (:source-code options)
       parse
       ast->ir
-      (optimize (:optimize options))
+      (optimize (:optimize-level options))
       ir->java))
 
 (defmethod compile-to :nodejs
@@ -43,7 +43,7 @@
   (-> (:source-code options)
       parse
       ast->ir
-      (optimize (:optimize options))
+      (optimize (:optimize-level options))
       ir->nodejs))
 
 (defmethod compile-to :rust
@@ -51,5 +51,5 @@
   (-> (:source-code options)
       parse
       ast->ir
-      (optimize (:optimize options))
+      (optimize (:optimize-level options))
       ir->rust))

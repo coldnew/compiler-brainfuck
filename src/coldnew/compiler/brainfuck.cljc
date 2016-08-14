@@ -8,8 +8,8 @@
   #?(:clj (:gen-class)))
 
 (defn compile
-  [{:keys [source-code filename target optimize] :as options
-    :or {optimize 0}}]
+  [{:keys [source-code filename target optimize-level] :as options
+    :or {optimize-level 0}}]
   (compile-to options))
 
 ;; 
@@ -38,7 +38,7 @@
   (write-file (:output-file options)
               (compile {:source-code (read-file (:input-file options))
                         :target      (:target     options)
-                        :optimize    (:optimize-level options)})))
+                        :optimize-level    (:optimize-level options)})))
 
 (def ^:private cli-options
   ;; An option with a required argument
