@@ -10,7 +10,7 @@
             [coldnew.compiler.brainfuck.backend.rust     :refer [ir->rust]]
             ))
 
-(defn to-ir
+(defn parse->ir
   "Build the input OPTIONS to ir format, which work as clojure's data structure.
   The OPTIONS must be a hash-map and contains following keys/values:
   {:input-file     \"xxx.bf\"
@@ -29,20 +29,20 @@
 
 (defmethod compile-to :c
   [options]
-  (->> options to-ir ir->c))
+  (->> options parse->ir ir->c))
 
 (defmethod compile-to :python
   [options]
-  (->> options to-ir ir->python))
+  (->> options parse->ir ir->python))
 
 (defmethod compile-to :java
   [options]
-  (->> options to-ir ir->java))
+  (->> options parse->ir ir->java))
 
 (defmethod compile-to :nodejs
   [options]
-  (->> options to-ir ir->nodejs))
+  (->> options parse->ir ir->nodejs))
 
 (defmethod compile-to :rust
   [options]
-  (->> options to-ir ir->rust))
+  (->> options parse->ir ir->rust))
