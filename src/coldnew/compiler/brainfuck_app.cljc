@@ -39,7 +39,7 @@
    ["-t" "--target LANGUAGE"      "Target language"
     :default :c
     :parse-fn #(keyword %)
-    :validate [#(contains? #{:c :java :nodejs :python :rust :go} %) "Unsupported target"]]
+    :validate [#(contains? #{:c :java :nodejs :python :rust :go :csharp} %) "Unsupported target"]]
    ["-O" "--optimize-level LEVEL"
     :default 0
     :parse-fn #?(:clj  #(Integer/parseInt %)
@@ -67,8 +67,10 @@
         "  python"
         "  rust"
         "  go"
+        "  csharp"
         ""]
        (str/join \newline)))
+
 
 (defn error-msg [errors]
   (str "The following errors occurred while parsing your command:\n\n"

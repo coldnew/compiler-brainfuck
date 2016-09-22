@@ -9,6 +9,7 @@
             [coldnew.compiler.brainfuck.backend.nodejs   :refer [ir->nodejs]]
             [coldnew.compiler.brainfuck.backend.rust     :refer [ir->rust]]
             [coldnew.compiler.brainfuck.backend.go       :refer [ir->go]]
+            [coldnew.compiler.brainfuck.backend.csharp   :refer [ir->csharp]]
             ))
 
 (defn parse->ir
@@ -55,3 +56,7 @@
 (defmethod compile-to :go
   [options]
   (->> options parse->ir ir->go))
+
+(defmethod compile-to :csharp
+  [options]
+  (->> options parse->ir ir->csharp))
