@@ -1,6 +1,7 @@
 (ns coldnew.compiler.brainfuck.backend.rust
   (:require [clojure.pprint :refer [cl-format]]
-            [clojure.string :as str]))
+            [clojure.string :as str]
+            [coldnew.compiler.brainfuck.utils :refer [line-indent]]))
 
 (declare generate-runtime ir->code)
 
@@ -41,62 +42,52 @@ fn main() {
 
 (defmethod ir->code :add
   [ir]
-  (let [indent (apply str (repeat (:indent-depth ir) "\t"))]
-    (str indent "cells[ptr] += 1;" "\n")))
+  (line-indent ir "cells[ptr] += 1;"))
 
 (defmethod ir->code :sub
   [ir]
-  (let [indent (apply str (repeat (:indent-depth ir) "\t"))]
-    (str indent "cells[ptr] -= 1;" "\n")))
+  (line-indent ir "cells[ptr] -= 1;"))
 
 (defmethod ir->code :right
   [ir]
-  (let [indent (apply str (repeat (:indent-depth ir) "\t"))]
-    (str indent "ptr += 1;" "\n")))
+  (line-indent ir "ptr += 1;"))
 
 (defmethod ir->code :left
   [ir]
-  (let [indent (apply str (repeat (:indent-depth ir) "\t"))]
-    (str indent "ptr -= 1;" "\n")))
+  (line-indent ir "ptr -= 1;"))
 
 (defmethod ir->code :output
   [ir]
-  (let [indent (apply str (repeat (:indent-depth ir) "\t"))]
-    (str indent "print!(\"{}\", cells[ptr] as u8 as char);" "\n")))
+  (line-indent ir "print!(\"{}\", cells[ptr] as u8 as char);"))
 
 (defmethod ir->code :input
   [ir]
-  (let [indent (apply str (repeat (:indent-depth ir) "\t"))]
-    (str indent "let mut buf :Vec<u8> = vec![0];" "\n"
-         indent "stdin().read(&mut buf).ok().expect(\"Failed to read from stdin.\");" "\n"
-         indent "cells[ptr] = buf[0];" "\n")))
+  (str (line-indent ir "let mut buf :Vec<u8> = vec![0];")
+       (line-indent ir "stdin().read(&mut buf).ok().expect(\"Failed to read from stdin.\");")
+       (line-indent ir "cells[ptr] = buf[0];")))
 
 (defmethod ir->code :loop
   [ir]
-  (let [indent (apply str (repeat (:indent-depth ir) "\t"))]
-    (str indent "while cells[ptr] != 0 {" "\n"
-         indent (apply str (str/join indent (map ir->code (:children ir))))
-         indent "}" "\n")))
+  (str (line-indent ir  "while cells[ptr] != 0 {")
+       (str/join "" (map ir->code (:children ir)))
+       (line-indent ir "}")))
 
 ;;;; Extended IR (for optimize)
 
 (defmethod ir->code :set-cell-value
   [ir]
-  (let [indent (apply str (repeat (:indent-depth ir) "\t"))]
-    (str indent "cells[ptr]" (if (< (:val ir) 0)
-                               (str " -= " (- (:val ir)))
-                               (str " += " (:val ir)))
-         ";\n")))
+  (line-indent ir "cells[ptr]" (if (< (:val ir) 0)
+                                 (str " -= " (- (:val ir)))
+                                 (str " += " (:val ir)))
+               ";"))
 
 (defmethod ir->code :set-cell-pointer
   [ir]
-  (let [indent (apply str (repeat (:indent-depth ir) "\t"))]
-    (str indent "ptr" (if (< (:val ir) 0)
-                        (str " -= " (- (:val ir)))
-                        (str " += " (:val ir)))
-         ";\n")))
+  (line-indent ir "ptr" (if (< (:val ir) 0)
+                          (str " -= " (- (:val ir)))
+                          (str " += " (:val ir)))
+               ";"))
 
 (defmethod ir->code :clear
   [ir]
-  (let [indent (apply str (repeat (:indent-depth ir) "\t"))]
-    (str indent "cells[ptr] = 0;" "\n")))
+  (line-indent ir "cells[ptr] = 0;"))

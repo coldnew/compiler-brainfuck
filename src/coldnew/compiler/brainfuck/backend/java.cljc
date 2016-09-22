@@ -1,6 +1,7 @@
 (ns coldnew.compiler.brainfuck.backend.java
   (:require [clojure.pprint :refer [cl-format]]
-            [clojure.string :as str]))
+            [clojure.string :as str]
+            [coldnew.compiler.brainfuck.utils :refer [line-indent]]))
 
 (declare generate-runtime ir->code)
 
@@ -48,54 +49,44 @@ public class BrainFuck {
 
 (defmethod ir->code :add
   [ir]
-  (let [indent (apply str (repeat (:indent-depth ir) "\t"))]
-    (str indent "cells[ptr]++;" "\n")))
+  (line-indent ir "cells[ptr]++;"))
 
 (defmethod ir->code :sub
   [ir]
-  (let [indent (apply str (repeat (:indent-depth ir) "\t"))]
-    (str indent "cells[ptr]--;" "\n")))
+  (line-indent ir "cells[ptr]--;"))
 
 (defmethod ir->code :right
   [ir]
-  (let [indent (apply str (repeat (:indent-depth ir) "\t"))]
-    (str indent "ptr++;" "\n")))
+  (line-indent ir "ptr++;"))
 
 (defmethod ir->code :left
   [ir]
-  (let [indent (apply str (repeat (:indent-depth ir) "\t"))]
-    (str indent "ptr--;" "\n")))
+  (line-indent ir "ptr--;"))
 
 (defmethod ir->code :output
   [ir]
-  (let [indent (apply str (repeat (:indent-depth ir) "\t"))]
-    (str indent "System.out.print((char) cells[ptr]);" "\n")))
+  (line-indent ir "System.out.print((char) cells[ptr]);"))
 
 (defmethod ir->code :input
   [ir]
-  (let [indent (apply str (repeat (:indent-depth ir) "\t"))]
-    (str indent "cells[ptr] = (byte) in.next().charAt(0);" "\n")))
+  (line-indent ir "cells[ptr] = (byte) in.next().charAt(0);"))
 
 (defmethod ir->code :loop
   [ir]
-  (let [indent (apply str (repeat (:indent-depth ir) "\t"))]
-    (str indent "while(cells[ptr] != 0) {" "\n"
-         indent (apply str (str/join indent (map ir->code (:children ir))))
-         indent "}" "\n")))
+  (str (line-indent ir "while(cells[ptr] != 0) {")
+       (str/join "" (map ir->code (:children ir)))
+       (line-indent ir "}")))
 
 ;;;; Extended IR (for optimize)
 
 (defmethod ir->code :set-cell-value
   [ir]
-  (let [indent (apply str (repeat (:indent-depth ir) "\t"))]
-    (str indent "cells[ptr] += " (:val ir) ";\n")))
+  (line-indent ir "cells[ptr] += " (:val ir) ";"))
 
 (defmethod ir->code :set-cell-pointer
   [ir]
-  (let [indent (apply str (repeat (:indent-depth ir) "\t"))]
-    (str indent "ptr += " (:val ir) ";\n")))
+  (line-indent ir "ptr += " (:val ir) ";"))
 
 (defmethod ir->code :clear
   [ir]
-  (let [indent (apply str (repeat (:indent-depth ir) "\t"))]
-    (str indent "cells[ptr] = 0;" "\n")))
+  (line-indent ir "cells[ptr] = 0;"))
