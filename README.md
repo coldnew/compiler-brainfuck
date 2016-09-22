@@ -9,6 +9,6 @@ FIXME
 
 ## License
 
-Copyright © 2015-2016 Yen-Chin, Lee <<coldnew.tw@gmail.com>>
+Copyright © 2016 Yen-Chin, Lee <<coldnew.tw@gmail.com>>
 
 Distributed under the [MIT License](http://opensource.org/licenses/MIT).
