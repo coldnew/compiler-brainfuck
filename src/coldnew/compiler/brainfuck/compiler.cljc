@@ -27,6 +27,10 @@
 
 (defmulti compile-to :target)
 
+(defmethod compile-to :default
+  [options]
+  (throw (ex-info "Unsupported target " {:target {:target options}})))
+
 (defmethod compile-to :c
   [options]
   (->> options parse->ir ir->c))

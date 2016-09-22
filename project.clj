@@ -16,8 +16,8 @@
   :plugins [[speclj "3.3.2"]
             [lein-cljsbuild "1.1.3"]]
 
-  :aot [coldnew.compiler.brainfuck]
-  :main ^:skip-aot coldnew.compiler.brainfuck
+  :aot [coldnew.compiler.brainfuck-app]
+  :main ^:skip-aot coldnew.compiler.brainfuck-app
 
   :jvm-opts ^:replace ["-Dclojure.compiler.direct-linking=true"]
 
