@@ -39,7 +39,7 @@
    ["-t" "--target LANGUAGE"      "Target language"
     :default :c
     :parse-fn #(keyword %)
-    :validate [#(contains? #{:c :java :nodejs :python :rust :go :csharp} %) "Unsupported target"]]
+    :validate [#(brainfuck/valid-target? %) "Unsupported target"]]
    ["-O" "--optimize-level LEVEL"
     :default 0
     :parse-fn #?(:clj  #(Integer/parseInt %)
