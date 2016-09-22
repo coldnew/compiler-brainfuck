@@ -1,6 +1,6 @@
 (ns coldnew.compiler.brainfuck
   (:require [coldnew.compiler.brainfuck.compiler :refer [compile-to]]
-            [coldnew.compiler.brainfuck.compiler :refer [supported-target]]
+            [coldnew.compiler.brainfuck.compiler :refer [supported-targets]]
             [clojure.string :as str])
   (:refer-clojure :exclude [compile])
   #?(:clj (:gen-class)))
@@ -13,4 +13,4 @@
 (defn valid-target?
   "Validate target is supported in brainfuck compiler or not."
   [target]
-  (contains? supported-target target))
+  (contains? supported-targets target))

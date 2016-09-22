@@ -12,6 +12,10 @@
             [coldnew.compiler.brainfuck.backend.csharp   :refer [ir->csharp]]
             ))
 
+;; supported-target we have
+(def supported-targets
+  #{:c :java :nodejs :python :rust :go :csharp})
+
 (defn parse->ir
   "Build the input OPTIONS to ir format, which work as clojure's data structure.
   The OPTIONS must be a hash-map and contains following keys/values:
