@@ -39,7 +39,7 @@
    ["-t" "--target LANGUAGE"      "Target language"
     :default :c
     :parse-fn #(keyword %)
-    :validate [#(contains? #{:c :java :nodejs :python :rust} %) "Unsupported target"]]
+    :validate [#(contains? #{:c :java :nodejs :python :rust :go} %) "Unsupported target"]]
    ["-O" "--optimize-level LEVEL"
     :default 0
     :parse-fn #?(:clj  #(Integer/parseInt %)
@@ -66,6 +66,7 @@
         "  nodejs"
         "  python"
         "  rust"
+        "  go"
         ""]
        (str/join \newline)))
 
