@@ -55,13 +55,11 @@ if __name__ == '__main__':
 
 (defmethod ir->code :output
   [ir]
-  (let [indent (apply str (repeat (:indent-depth ir) "\t"))]
-    (str indent "print(chr(cells[ptr]), end='')" "\n")))
+  (line-indent ir "print(chr(cells[ptr]), end='')"))
 
 (defmethod ir->code :input
   [ir]
-  (let [indent (apply str (repeat (:indent-depth ir) "\t"))]
-    (str indent "int(input(\"Input = \"))" "\n")))
+  (line-indent ir "int(input(\"Input = \"))"))
 
 (defmethod ir->code :loop
   [ir]

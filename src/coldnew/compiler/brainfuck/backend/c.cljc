@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
 
 (defmethod ir->code :input
   [ir]
-  (line-indent "*ptr = getchar();"))
+  (line-indent ir "*ptr = getchar();"))
 
 (defmethod ir->code :loop
   [ir]
